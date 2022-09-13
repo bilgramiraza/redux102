@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "@reduxjs/toolkit";
+import { createSlice, nanoid} from "@reduxjs/toolkit";
 
 const initialState = [
   {id:'1', title:'Learning Redux Toolkit', content:"This is the start of me learning Redux using the Redux Toolkit."},
