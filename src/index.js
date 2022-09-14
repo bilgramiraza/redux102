@@ -10,9 +10,9 @@ store.dispatch(fetchUsers());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode> //Temporaly Disabled to Avoid Doubling of Data Recieved due to the double mount behaviour of React 18
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
