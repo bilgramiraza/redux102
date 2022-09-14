@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import PostAuthor from "./PostAuthor";
 import { selectAllPosts } from "./postsSlice";
+import ReactionButtonTray from "./ReactionButtonTray";
 import TimeStamp from "./TimeStamp";
+
 const PostsList = () => {
   const posts = useSelector(selectAllPosts);
 
@@ -15,6 +17,7 @@ const PostsList = () => {
         <TimeStamp timestamp={post.date} />
       </p>
       <p>{post.content.substring(0,100)}</p>
+      <ReactionButtonTray post={post} />
     </article>
   ));
 
