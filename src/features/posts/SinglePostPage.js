@@ -4,12 +4,13 @@ import { selectPostById } from "./postsSlice";
 import PostAuthor from "./PostAuthor";
 import TimeStamp from "./TimeStamp";
 import ReactionButtonTray from "./ReactionButtonTray";
-
+import { useParams } from "react-router-dom";
 
 const SinglePostPage = () => {
-  //TODO: Get PostID
+  
+  const { postId } = useParams(); 
+  const post = useSelector((state)=> selectPostById(state, Number(postId)));
 
-  const post = useSelector((state)=> selectPostById(state, postId));
   if(!post){
     return (
       <section>
