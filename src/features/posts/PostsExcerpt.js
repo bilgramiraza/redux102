@@ -6,13 +6,15 @@ import { Link } from "react-router-dom";
 const PostsExcerpt = ({ post }) => {
   return (
     <article>
-      <h3>{post.title}</h3>
+      <h2>{post.title}</h2>
       <p className="postCredit">
         <PostAuthor userId={post.userId} />
         <TimeStamp timestamp={post.date} />
       </p>
       <p className="excerpt">{post.body.substring(0,75)}...</p>
-      <Link className="postCredit" to={`post/${post.id}`}>Read More</Link>
+      <p className="postCredit">
+        <Link to={`post/${post.id}`}>Read More</Link>
+      </p>
       <ReactionButtonTray post={post} />
     </article>
   )
