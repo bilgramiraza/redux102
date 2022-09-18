@@ -11,9 +11,9 @@ const EditPostForm = () => {
   const post = useSelector((state)=> selectPostById(state,Number(postId)));
   const users = useSelector(selectAllUsers);
 
-  const [title, setTitle] = useState(post.title);
-  const [content, setContent] = useState(post.body);
-  const [userId, setUserId] = useState(post.userId);
+  const [title, setTitle] = useState(post?.title);
+  const [content, setContent] = useState(post?.body);
+  const [userId, setUserId] = useState(post?.userId);
   const [requestStatus, setRequestStatus] = useState('idle');
 
   const dispatch = useDispatch();
