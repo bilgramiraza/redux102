@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createSelector} from "@reduxjs/toolkit";
 import axios from "axios";
 import { sub } from "date-fns";
 
@@ -121,6 +121,11 @@ export const getPostsError = (state) => state.posts.error;
 export const getCount = (state) => state.posts.count;
 
 export const selectPostById = (state,postId) => state.posts.posts.find(post => post.id === postId);
+
+export const selectPostsByUser = createSelector(
+  [selectAllPosts, (state, userId) => userId],
+  (posts, userId) => posts.filter(post => post.userId === userId)
+);
 
 export const { increaseCount, reactionAdded } = postsSlice.actions;
 
