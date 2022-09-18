@@ -89,7 +89,7 @@ form {
 
 .postCredit a, 
 .postCredit a:visited {
-  margin-right: 0.5rem;
+  margin-inline: 0.5rem;
   color: black;
 }
 
@@ -100,6 +100,12 @@ form {
 
 .excerpt {
   font-style: italic;
+}
+
+.reactionTray{
+  display: flex;
+  width: 45%;
+  justify-content: start;
 }
 
 .reactionButton {
