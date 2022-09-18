@@ -116,3 +116,28 @@ form {
   color: whitesmoke;
   font-size: 1.5rem;
 }
+
+.editButtonTray{
+  display: flex;
+  width: 90%;
+  margin-inline: auto;
+  justify-content: space-evenly;
+}
+.save,.delete{
+  color: whitesmoke;
+  width: 45%;
+  border-style: outset;
+}
+.save{
+  background-color: rgba(0, 128, 0, 0.7);
+}
+.delete{
+  background-color: rgb(255, 0, 0, 0.7);
+}
+.save:hover,
+.delete:hover,
+.save:focus,
+.delete:focus{
+color: #333;
+border-style: inset;
+}
