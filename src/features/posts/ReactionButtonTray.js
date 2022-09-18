@@ -27,7 +27,7 @@ const ReactionButtonTray = ({ post }) => {
     );
   });
   return (
-    <div>{reactionButtons}</div>
+    <div className="reactionTray">{reactionButtons}</div>
   )
 }
 
