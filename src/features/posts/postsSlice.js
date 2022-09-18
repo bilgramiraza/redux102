@@ -26,6 +26,13 @@ export const updatePost = createAsyncThunk('posts/updatePost', async (initialPos
   return response.data;
 });
 
+export const deletePost = createAsyncThunk('posts/deletePost', async (initialPost)=>{
+  const { id } = initialPost;
+  const response = await axios.delete(`${postsURL}/${id}`);
+  if(response?.status === 200) return initialPost;       //Place holder Code to deal with 
+  return `${response?.status}: ${response?.statusText}`; //the Empty return of Json Placeholder
+});
+
 const postsSlice = createSlice({
   name:'posts',
   initialState,
@@ -113,6 +120,16 @@ const postsSlice = createSlice({
         action.payload.date = new Date().toISOString();
         const posts = state.posts.filter(post => post.id !== id);
         state.posts = [...posts, action.payload];
+      })
+      .addCase(deletePost.fulfilled, (state, action)=>{
+        if(!action.payload?.id){
+          console.log('Deletion could not complete');
+          console.log(action.payload);
+          return;
+        }
+        const { id } = action.payload;
+        const posts = state.posts.filter(post => post.id !== id);
+        state.posts = posts;
       })
   }
 });
