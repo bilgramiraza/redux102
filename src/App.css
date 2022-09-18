@@ -105,7 +105,7 @@ form {
 .reactionTray{
   display: flex;
   width: 45%;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .reactionButton {
