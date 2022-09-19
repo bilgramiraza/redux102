@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import { selectAllUsers } from "../users/usersSlice"
-import { selectPostById, updatePost, deletePost, useUpdatePostMutation, useDeletePostMutation } from "./postsSlice"
+import { selectPostById, useUpdatePostMutation, useDeletePostMutation } from "./postsSlice"
 
 const EditPostForm = () => {
   const { postId } = useParams();
