@@ -99,6 +99,27 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         {type: 'Post', id: arg.id}
       ]
     }),
+    addReaction: builder.mutation({
+      query: ({ postId, reactions}) => ({
+        url: `posts/${postId}`,
+        method: 'PATCH',
+        body: { reactions },
+      }),
+      async onQueryStarted({ postId, reactions }, {dispatch, queryFulfilled}){
+        const patchResult = dispatch(
+          extendedApiSlice.util.updateQueryData('getPosts',undefined, draft => {
+            const post = draft.entities[postId];  //Immer Wrapped
+            if(post)  post.reactions = reactions;
+          })
+        );
+        try {
+          await queryFulfilled;
+        }
+        catch{
+          patchResult.undo();
+        }
+      },
+    }),
   })
 });
 
@@ -108,6 +129,7 @@ export const {
   useAddNewPostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
+  useAddReactionMutation,
 } = extendedApiSlice;
 
 //Returns Query Result Object
