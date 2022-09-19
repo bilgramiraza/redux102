@@ -254,9 +254,9 @@
       "date": "2022-04-14T17:46:43.450Z",
       "reactions": {
         "thumbsUp": 5,
-        "wow": 0,
+        "thumbsDown": 0,
         "heart": 0,
-        "rocket": 0,
+        "fire": 0,
         "coffee": 0
       }
     },
@@ -275,9 +275,9 @@
       "date": "2022-04-27T16:59:02.116Z",
       "reactions": {
         "thumbsUp": 0,
-        "wow": 0,
+        "thumbsDown": 0,
         "heart": 0,
-        "rocket": 0,
+        "fire": 0,
         "coffee": 12
       }
     },
@@ -287,10 +287,10 @@
       "title": "dolorem dolore est ipsam",
       "body": "dignissimos aperiam dolorem qui eum\nfacilis quibusdam animi sint suscipit qui sint possimus cum\nquaerat magni maiores excepturi\nipsam ut commodi dolor voluptatum modi aut vitae",
       "reactions": {
-        "thumbsUp": 4,
-        "wow": 0,
-        "heart": 0,
-        "rocket": 0,
+        "thumbsUp": 6,
+        "thumbsDown": 0,
+        "heart": 1,
+        "fire": 0,
         "coffee": 6
       }
     },
@@ -841,9 +841,9 @@
       "date": "2022-04-13T21:43:05.630Z",
       "reactions": {
         "thumbsUp": 0,
-        "wow": 0,
+        "thumbsDown": 0,
         "heart": 0,
-        "rocket": 0,
+        "fire": 0,
         "coffee": 0
       },
       "id": 101
