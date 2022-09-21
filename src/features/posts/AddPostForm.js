@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectAllUsers } from "../users/usersSlice";
+import { useGetUsersQuery } from "../users/usersSlice";
 import { useAddNewPostMutation } from "./postsSlice";
 
 
@@ -13,7 +12,7 @@ const AddPostForm = () => {
   const [content, setContent] = useState("");
   const [userId, setUserId] = useState('');
 
-  const users = useSelector(selectAllUsers);
+  const { data: users, isSuccess } = useGetUsersQuery('getUsers');
 
   const onTitleChanged = e => setTitle(e.target.value);
   const onContentChanged = e => setContent(e.target.value);
@@ -24,7 +23,7 @@ const AddPostForm = () => {
   const onSavePostClicked = async () =>{
     if(canSave){
       try{
-        await addNewPost({title,body:content,userId}).unwrap();
+        await addNewPost({title, body:content, userId}).unwrap();
         
         setTitle('');
         setContent("");
@@ -37,12 +36,14 @@ const AddPostForm = () => {
     }
   };
 
-  const usersOptionList = users.map(user => (
-    <option key={user.id} value={user.id}>
-      {user.name}
-    </option>
-  ));
-
+  let usersOptionList;
+  if(isSuccess){
+    usersOptionList = users.ids.map(id => (
+      <option key={id} value={id}>
+        {users.entities[id].name}
+      </option>
+    ));
+  }
   return (
     <section>
       <h2>Add a New Post</h2>
