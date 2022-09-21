@@ -1,44 +1,58 @@
-import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { useGetPostsByUserIdQuery } from "../posts/postsSlice";
-import { selectUserById } from "./usersSlice";
+import { useGetUsersQuery } from "./usersSlice";
 
 const UserPage = () => {
   const { userId } = useParams();
-  const user = useSelector(state => selectUserById(state, Number(userId)));
+
+  const {
+    userData: user,
+    isLoading: isLoadingUser,
+    isSuccess: isSuccessUser,
+    isError: isErrorUser,
+    error: errorUser,
+  } = useGetUsersQuery('getUsers',{
+    selectFromResult: ({data, isLoading, isSuccess, isError, error}) => ({
+      userData: data?.entities[userId],
+      isLoading,
+      isSuccess,
+      isError,
+      error,
+    })
+  });
 
   const {
     data: userPosts,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
+    isLoading: isLoadingPosts,
+    isSuccess: isSuccessPosts,
+    isError: isErrorPosts,
+    error: errorPosts,
   } = useGetPostsByUserIdQuery(userId);
 
   let content;
-  if(isLoading){
+  if(isLoadingPosts || isLoadingUser){
     content = <p>Loading...</p>;
   }
-  else if(isSuccess){
+  else if(isSuccessPosts && isSuccessUser){
     const { ids, entities } = userPosts;
-    content = ids.map(id => (
-      <li key={id}>
-        <Link to={`/post/${id}`}>{entities[id].title}</Link>
-      </li>
-    ));
+    content = (
+      <section>
+        <h2>{user?.name}</h2>
+        <ol>
+          {ids.map(id => (
+            <li key={id}>
+              <Link to={`/post/${id}`}>{entities[id].title}</Link>
+            </li>
+          ))}
+        </ol>
+      </section>
+    );
   }
-  else if(isError){
-    content = <p>{error}</p>;
+  else if(isErrorPosts || isErrorUser){
+    content = <p>{errorPosts || errorUser}</p>;
   }
 
-  return (
-    <section>
-      <h2>{user?.name}</h2>
-      <ol>
-        {content}
-      </ol>
-    </section>
-  )
+  return content;
 }
 
 export default UserPage
