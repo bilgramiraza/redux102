@@ -1,7 +1,4 @@
-import { 
-  createSelector, 
-  createEntityAdapter
-} from "@reduxjs/toolkit";
+import { createEntityAdapter } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
 import { apiSlice } from "../api/apiSlice";
 
@@ -53,7 +50,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         return postsAdapter.setAll(initialState, loadedPosts);
       },
       providesTags: (result, error, arg) => {
-        console.log(result);
         return [...result.ids.map(id => ({type: 'Post', id}))];
       }
     }),
@@ -131,19 +127,3 @@ export const {
   useDeletePostMutation,
   useAddReactionMutation,
 } = extendedApiSlice;
-
-//Returns Query Result Object
-export const selectPostsResult = extendedApiSlice.endpoints.getPosts.select();
-
-//Memoized Selector
-const selectPostsData = createSelector(
-  selectPostsResult,                //Input Function
-  postsResult => postsResult.data,  //Output Function
-);
-
-//get Selectors Creates Selection functions that we rename using object destructuring
-export const {
-  selectAll: selectAllPosts,
-  selectById: selectPostById,
-  selectIds: selectPostIds,
-} = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState);
