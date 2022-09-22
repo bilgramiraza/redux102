@@ -103,7 +103,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted({ postId, reactions }, {dispatch, queryFulfilled}){
         const patchResult = dispatch(
-          extendedApiSlice.util.updateQueryData('getPosts',undefined, draft => {
+          extendedApiSlice.util.updateQueryData('getPosts','getPosts', draft => {
             const post = draft.entities[postId];  //Immer Wrapped
             if(post)  post.reactions = reactions;
           })
