@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
-import { selectPostById } from "./postsSlice";
-
+import { useGetPostsQuery } from "./postsSlice";
 import PostAuthor from "./PostAuthor";
 import TimeStamp from "./TimeStamp";
 import ReactionButtonTray from "./ReactionButtonTray";
@@ -9,7 +7,16 @@ import { Link, useParams } from "react-router-dom";
 const SinglePostPage = () => {
   
   const { postId } = useParams(); 
-  const post = useSelector((state)=> selectPostById(state, Number(postId)));
+  const { post, isLoading } =useGetPostsQuery('getPosts', {
+    selectFromResult: ({data, isLoading})=>({
+      post: data?.entities[postId],
+      isLoading,
+    }),
+  });
+
+  if(isLoading){
+    return <p>Loading...</p>
+  }
 
   if(!post){
     return (
