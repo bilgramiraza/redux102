@@ -1,8 +1,7 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
+import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { selectAllUsers } from "../users/usersSlice"
-import { selectPostById, useUpdatePostMutation, useDeletePostMutation } from "./postsSlice"
+import { useGetUsersQuery } from "../users/usersSlice"
+import { useGetPostsQuery, useUpdatePostMutation, useDeletePostMutation } from "./postsSlice"
 
 const EditPostForm = () => {
   const { postId } = useParams();
@@ -11,12 +10,31 @@ const EditPostForm = () => {
   const [updatePost, { isLoading }] = useUpdatePostMutation();
   const [deletePost] = useDeletePostMutation();
 
-  const post = useSelector((state)=> selectPostById(state,Number(postId)));
-  const users = useSelector(selectAllUsers);
+  const { post, isLoading: isLoadingPost, isSuccess: isSuccessPost} = useGetPostsQuery('getPosts',{
+    selectFromResult: ({data, isLoading, isSuccess}) => ({
+      post: data?.entities[postId],
+      isLoading,
+      isSuccess,
+    }),
+  });
 
-  const [title, setTitle] = useState(post?.title);
-  const [content, setContent] = useState(post?.body);
-  const [userId, setUserId] = useState(post?.userId);
+  const {data: users, isSuccess: isSuccessUsers } = useGetUsersQuery('getUsers');
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [userId, setUserId] = useState('');
+
+  useEffect(()=>{
+    if(isSuccessPost){
+      setTitle(post.title);
+      setContent(post.body);
+      setUserId(post.userId);
+    }
+  },[isSuccessPost, post?.title, post?.body, post?.userId]);
+
+  if(isLoadingPost){
+    return <p>Loading...</p>
+  }
 
   if(!post){
     return (
@@ -36,7 +54,7 @@ const EditPostForm = () => {
     if(canSave){
       try {
         await updatePost({
-          id:post.id, 
+          id:post?.id, 
           title, 
           body:content, 
           userId,
@@ -51,17 +69,20 @@ const EditPostForm = () => {
     }
   };
 
-  const userOptions = users.map(user=>(
+  const userOptionsList = users.ids.map(id =>(
     <option 
-      key={user.id}
-      value={user.id}> 
-        {user.name}
+      key={id}
+      value={id}> 
+        {users.entities[id].name}
     </option>
   ));
 
   const onDeletePostClicked = async () => {
     try {
-      await deletePost({id:post.id}).unwrap();
+      await deletePost({
+        id:post?.id
+      }).unwrap();
+
       setTitle('');
       setContent('');
       setUserId('');
