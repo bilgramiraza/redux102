@@ -69,13 +69,16 @@ const EditPostForm = () => {
     }
   };
 
-  const userOptionsList = users.ids.map(id =>(
-    <option 
-      key={id}
-      value={id}> 
-        {users.entities[id].name}
-    </option>
-  ));
+  let userOptionsList;
+  if(isSuccessUsers){
+      userOptionsList = users.ids.map(id =>(
+        <option 
+        key={id}
+        value={id}> 
+          {users.entities[id].name}
+      </option>
+    ));
+  }
 
   const onDeletePostClicked = async () => {
     try {
