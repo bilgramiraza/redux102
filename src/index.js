@@ -4,16 +4,11 @@ import './index.css';
 import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
-import { fetchUsers } from './features/users/usersSlice';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { extendedApiSlice } from './features/posts/postsSlice';
-
-store.dispatch(fetchUsers());
-store.dispatch(extendedApiSlice.endpoints.getPosts.initiate());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode> //Temporaly Disabled to Avoid Doubling of Data Recieved due to the double mount behaviour of React 18
+  <React.StrictMode> 
     <Provider store={store}>
       <Router>
         <Routes>
@@ -21,5 +16,5 @@ root.render(
         </Routes>
       </Router>
     </Provider>
-  // </React.StrictMode>
+  </React.StrictMode>
 );
